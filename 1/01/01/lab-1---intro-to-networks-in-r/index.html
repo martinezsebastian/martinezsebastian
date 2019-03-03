@@ -87,7 +87,7 @@ library(&quot;GGally&quot;)
 if(!require(scales)) install.packages(&quot;scales&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
 library(&quot;scales&quot;)
 
-options(width = 300)</code></pre>
+options(width = 500)</code></pre>
 <p>Loading the statnet package also loads other important packages including <code>sna</code>, <code>network</code>, and <code>ergm</code>. Installing and loading statnet automatically installs and loads all the necessary packages for statistical network analysis.</p>
 <p><em>Note:</em> We are not going to use the <code>igraph</code> package. <code>igraph</code> and <code>statnet</code> do not play nicely with each other and there is a chance using them will interfere with an otherwise smooth workflow. In the case you want to use some plotting functions from <code>igraph</code>, make sure to always use <code>igraph::</code> or <code>network::</code> or <code>sna::</code> or <code>ergm::</code> in front of any command to specify from which package <code>R</code> should run the command.</p>
 </div>
