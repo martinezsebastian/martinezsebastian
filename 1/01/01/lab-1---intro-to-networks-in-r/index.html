@@ -62,7 +62,7 @@
 
   <article class="article">
     
-    <span class="article-duration">2 min read</span>
+    <span class="article-duration">6 min read</span>
     
 
     <h1 class="article-title">Lab 1 - Intro to networks in R</h1>
@@ -111,9 +111,97 @@ options(width = 300)</code></pre>
 <li>Create/modify the network object with the information from the matrix</li>
 </ol>
 <p><img src="../../../../images/NW_year_marks_resonly_summer.jpg",width = "850", height = "850"></p>
-<!--
-![im](/images/NW_year_marks_resonly_summer.jpg)
--->
+<p>Read in the data. Remember to use an easy variable name when loading the data.</p>
+<pre class="r"><code># Two datasets: 
+# Students&#39; edgelist
+el  &lt;- read.table(&#39;../../static/data/Edgelist_3Classes_Fall.csv&#39;, 
+                  sep = &quot;;&quot;,
+                  header = TRUE)
+# and student&#39;s attributes
+dt &lt;- read.table(&#39;../../static/data/Students_attributes_short.csv&#39;, 
+                 sep = &quot;;&quot;,
+                 header = TRUE)</code></pre>
+</div>
+<div id="building-the-network" class="section level2">
+<h2>Building the network</h2>
+<p>Let’s look at the edgelist-data first:</p>
+<pre class="r"><code>head(el)</code></pre>
+<pre><code>##   studentID friend.ID.code best.friend go.out.friend school.friend free.time.friend
+## 1      1894           1095         Yes           Yes            No              Yes
+## 2      2200           1109          No            No           Yes               No
+## 3      1880           1340          No            No           Yes              Yes
+## 4      1854           1340          No            No           Yes               No
+## 5      1858           1340          No            No           Yes               No
+## 6      1898           1384          No            No            No              Yes</code></pre>
+<p>The first column contains the ID of the students who filled out the survey and nominated someone else as a friend. The ID of the nominated friends is stored in the second column. The other columns include information on what kind of friendship does the student have with the nominated friend: best friend; someone you go out and party with; school friend; and/or someone you spend your freetime with).</p>
+<p>Before anything else we need to create a vector with all the unique ID-codes of the students.</p>
+<pre class="r"><code># This creates a vector with all the unique IDs of the nominating students
+# as well as all the nominated students. 
+students &lt;- unique(c(el$studentID, el$friend.ID.code))
+students</code></pre>
+<pre><code>##  [1] 1894 2200 1880 1854 1858 1898 1842 1683 1950 1681 1886 2206 1836 1410 1476 1844 1063 1448 1872 1109 2018 1384 1497 1902 1679 1468 1884 1653 1916 2202 1404 1340 1418 1675 1677 1671 1878 1651 2210 1095 1649 1701 1900</code></pre>
+<p>There are in total 43 students in the network.</p>
+<p>To move forward we need to create a network object. There are two ways of moving forward: we can load it directly from the edgelist, or we can create an adjacency matrix. This version of the tutorial is going to create the network object from the edgelist because the homework for today is to load from a matrix. A later version of this document will include both versions.</p>
+<p>Although edgelists are a very reliable and efficient way of storing your network data, adjacency matrices are more intuitive (i.e. homework material). Storing a network using an adjacency matrix also helps storing network attributes (by using the rownames of the adjacency matrix and assigning those rownames the corresponding attributes - we’ll see that later).</p>
+<p>Following the workflow described above, we are going to create an empty matrix with the unique student IDs as the row and column names so that we can later populate them with the information from the edgelist.</p>
+<pre class="r"><code>mat &lt;- matrix(0, nrow =length(students) , ncol = length(students))
+colnames(mat) &lt;- as.character(students)
+rownames(mat) &lt;- as.character(students)
+# A glimpse of what this looks like
+mat[1:4, 1:4]</code></pre>
+<pre><code>##      1894 2200 1880 1854
+## 1894    0    0    0    0
+## 2200    0    0    0    0
+## 1880    0    0    0    0
+## 1854    0    0    0    0</code></pre>
+<p>We are now going to use a loop to fill the matrix: 1 whenever there is a friendship tie in <code>students</code>, 0 otherwise.</p>
+<pre class="r"><code>i &lt;- 1
+for (i in 1:nrow(el)) {
+  row.index &lt;- which(students == el[i, 1])
+  col.index &lt;- which(students == el[i, 2])
+  mat[row.index, col.index] &lt;- 1
+}
+mat[1:4, 1:4]</code></pre>
+<pre><code>##      1894 2200 1880 1854
+## 1894    0    0    0    0
+## 2200    0    0    0    0
+## 1880    0    0    0    1
+## 1854    0    0    1    0</code></pre>
+<p>Make sure you verify what you did after every step! For example, the first line from the imported edgelist suggests that the student with ID <code>1894</code> nominated <code>1095</code> as a friend:</p>
+<pre class="r"><code>el[1,]</code></pre>
+<pre><code>##   studentID friend.ID.code best.friend go.out.friend school.friend free.time.friend
+## 1      1894           1095         Yes           Yes            No              Yes</code></pre>
+<p>This means that the matrix should show a <code>1</code> in the row corresponding to <code>1894</code> and the column corresponding to <code>1095</code>.</p>
+<pre class="r"><code>mat[row.names(mat) == &#39;1894&#39;, colnames(mat) == &#39;1095&#39;]</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>Good! Let’s move on.</p>
+<p>The <code>network()</code> function takes edgelists as input to create a network object. To do so, we need a simpler version of the <code>el</code> object. NOtice how we are redefining the names as characters, so that <code>R</code> can read them properly.</p>
+<pre class="r"><code>el_to_network &lt;- el[, c(&quot;studentID&quot;, &quot;friend.ID.code&quot;)]
+el_to_network$studentID &lt;- as.character(el_to_network$studentID)
+el_to_network$friend.ID.code &lt;- as.character(el_to_network$friend.ID.code)</code></pre>
+</div>
+</div>
+<div id="building-a-network-object" class="section level1">
+<h1>Building a network object</h1>
+<p>We can construct a network object using the edgelist:</p>
+<pre class="r"><code>nw &lt;- network(el_to_network, directed = TRUE, matrix.type = &quot;edgelist&quot;)</code></pre>
+<p>Or we can do it by using the adjacency matrix:</p>
+<pre class="r"><code>nw &lt;- network(mat, directed = TRUE)</code></pre>
+<div id="a-simple-plot" class="section level2">
+<h2>A simple plot</h2>
+<p>We use the <code>ggnet2()</code>-command from the <code>GGally</code>-package. It uses <code>ggplot2</code> and creates very nice network plots.</p>
+<p><em>Note:</em> This tutorial includes several network plotting instructions. They are here so that you can learn how to plot network objects and get an initial intuition of what you are looking at. <em>However</em>, what we would like you to take away from this particular worksheet is how to create networks from adjacency matrices, add attributes, and set everything up for applying inferential techniques. Visual aids are amazing at helping us understand, but they should only be a complement to rigurous statistical methodology.</p>
+<pre class="r"><code>ggnet2(net = nw, 
+       label = TRUE, 
+       label.size = 3,
+       arrow.size = 3, 
+       arrow.gap = .03)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-12-1.png" alt="Friendship network - better" width="80%" />
+<p class="caption">
+Figure 1: Friendship network - better
+</p>
+</div>
 </div>
 </div>
 
@@ -152,6 +240,9 @@ options(width = 300)</code></pre>
 
 
     
+<script src="../../../../js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 
     
   </body>
