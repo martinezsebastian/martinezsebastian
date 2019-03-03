@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.47" />
+
+
+<title>Lab 1 - Intro to networks in R - A Hugo website</title>
+<meta property="og:title" content="Lab 1 - Intro to networks in R - A Hugo website">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">2 min read</span>
+    
+
+    <h1 class="article-title">Lab 1 - Intro to networks in R</h1>
+
+    
+    <span class="article-date">0001-01-01</span>
+    
+
+    <div class="article-content">
+      <div id="setup-juanito" class="section level3">
+<h3>Setup Juanito</h3>
+<p>Before we begin, let’s install/load the packages we are going to use today. Perhaps the one you are going to use for the first time is <code>statnet</code>.</p>
+<pre class="r"><code>rm(list = ls())
+if(!require(statnet)) install.packages(&quot;statnet&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;statnet&quot;)
+if(!require(mice)) install.packages(&quot;mice&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;mice&quot;)
+if(!require(ggplot2)) install.packages(&quot;ggplot2&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;ggplot2&quot;)
+if(!require(GGally)) install.packages(&quot;GGally&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;GGally&quot;)
+if(!require(scales)) install.packages(&quot;scales&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;scales&quot;)
+
+options(width = 300)</code></pre>
+<p>Loading the statnet package also loads other important packages including <code>sna</code>, <code>network</code>, and <code>ergm</code>. Installing and loading statnet automatically installs and loads all the necessary packages for statistical network analysis.</p>
+<p><em>Note:</em> We are not going to use the <code>igraph</code> package. <code>igraph</code> and <code>statnet</code> do not play nicely with each other and there is a chance using them will interfere with an otherwise smooth workflow. In the case you want to use some plotting functions from <code>igraph</code>, make sure to always use <code>igraph::</code> or <code>network::</code> or <code>sna::</code> or <code>ergm::</code> in front of any command to specify from which package <code>R</code> should run the command.</p>
+</div>
+<div id="initial-set-up" class="section level1">
+<h1>1 Initial set-up</h1>
+<p>We are going to look at a network coming from a Swiss high school with about 400 students. The data we are going to use comes from a only one of the classes in this high school. This is what the entire network looks like the figure below.</p>
+<p>Today we are going to learn how to:</p>
+<ul>
+<li>load the data</li>
+<li>create a network object</li>
+<li>add some nodal covariates</li>
+<li>add an edge covariate</li>
+<li>plot the network</li>
+</ul>
+<div id="on-workflow" class="section level2">
+<h2>On Workflow</h2>
+<p>Today’s activity provides a template for a useful workflow when doing network analysis. In short, the workflow follows three simple steps:</p>
+<ol style="list-style-type: decimal">
+<li>Load the data</li>
+<li>Create a matrix with the information we need</li>
+<li>Create/modify the network object with the information from the matrix</li>
+</ol>
+<p><img src="../../../../images/NW_year_marks_resonly_summer.jpg",width = "850", height = "850"></p>
+<!--
+![im](/images/NW_year_marks_resonly_summer.jpg)
+-->
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
