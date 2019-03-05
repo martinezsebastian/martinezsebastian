@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.47" />
+
+
+<title>Lab 1 - Intro to networks in R - A Hugo website</title>
+<meta property="og:title" content="Lab 1 - Intro to networks in R - A Hugo website">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">15 min read</span>
+    
+
+    <h1 class="article-title">Lab 1 - Intro to networks in R</h1>
+
+    
+    <span class="article-date">2019-02-25</span>
+    
+
+    <div class="article-content">
+      <div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>Before we begin, let’s install/load the packages we are going to use today. Perhaps the one you are going to use for the first time is <code>statnet</code>.</p>
+<pre class="r"><code>rm(list = ls())
+if(!require(statnet)) install.packages(&quot;statnet&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;statnet&quot;)
+if(!require(mice)) install.packages(&quot;mice&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;mice&quot;)
+if(!require(ggplot2)) install.packages(&quot;ggplot2&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;ggplot2&quot;)
+if(!require(GGally)) install.packages(&quot;GGally&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;GGally&quot;)
+if(!require(scales)) install.packages(&quot;scales&quot;,repos = &quot;http://cran.us.r-project.org&quot;)
+library(&quot;scales&quot;)</code></pre>
+<p>Loading the statnet package also loads other important packages including <code>sna</code>, <code>network</code>, and <code>ergm</code>. Installing and loading statnet automatically installs and loads all the necessary packages for statistical network analysis.</p>
+<p><em>Note:</em> We are not going to use the <code>igraph</code> package. <code>igraph</code> and <code>statnet</code> do not play nicely with each other and there is a chance using them will interfere with an otherwise smooth workflow. In the case you want to use some plotting functions from <code>igraph</code>, make sure to always use <code>igraph::</code> or <code>network::</code> or <code>sna::</code> or <code>ergm::</code> in front of any command to specify from which package <code>R</code> should run the command.</p>
+</div>
+<div id="initial-set-up" class="section level1">
+<h1>1 Initial set-up</h1>
+<p>We are going to look at a network coming from a Swiss high school with about 400 students. The data we are going to use comes from a only one of the classes in this high school. This is what the entire network looks like the figure below.</p>
+<p>Today we are going to learn how to:</p>
+<ul>
+<li>load the data</li>
+<li>create a network object</li>
+<li>add some nodal covariates</li>
+<li>add an edge covariate</li>
+<li>plot the network</li>
+</ul>
+<div id="on-workflow" class="section level2">
+<h2>On Workflow</h2>
+<p>Today’s activity provides a template for a useful workflow when doing network analysis. In short, the workflow follows three simple steps:</p>
+<ol style="list-style-type: decimal">
+<li>Load the data</li>
+<li>Create a matrix with the information we need</li>
+<li>Create/modify the network object with the information from the matrix</li>
+</ol>
+<p><img src="../../../../images/NW_year_marks_resonly_summer.jpg",width = "850", height = "850"></p>
+<p>Read in the data. Remember to use an easy variable name when loading the data.</p>
+<pre class="r"><code># Two datasets: 
+# Students&#39; edgelist
+el  &lt;- read.table(&#39;../../static/data/Edgelist_3Classes_Fall.csv&#39;, 
+                  sep = &quot;;&quot;,
+                  header = TRUE)
+# and student&#39;s attributes
+dt &lt;- read.table(&#39;../../static/data/Students_attributes_short.csv&#39;, 
+                 sep = &quot;;&quot;,
+                 header = TRUE)</code></pre>
+</div>
+<div id="building-the-network" class="section level2">
+<h2>Building the network</h2>
+<p>Let’s look at the edgelist-data first:</p>
+<pre class="r"><code>head(el)</code></pre>
+<pre><code>##   studentID friend.ID.code best.friend go.out.friend school.friend free.time.friend
+## 1      1894           1095         Yes           Yes            No              Yes
+## 2      2200           1109          No            No           Yes               No
+## 3      1880           1340          No            No           Yes              Yes
+## 4      1854           1340          No            No           Yes               No
+## 5      1858           1340          No            No           Yes               No
+## 6      1898           1384          No            No            No              Yes</code></pre>
+<p>The first column contains the ID of the students who filled out the survey and nominated someone else as a friend. The ID of the nominated friends is stored in the second column. The other columns include information on what kind of friendship does the student have with the nominated friend: best friend; someone you go out and party with; school friend; and/or someone you spend your freetime with).</p>
+<p>Before anything else we need to create a vector with all the unique ID-codes of the students.</p>
+<pre class="r"><code># This creates a vector with all the unique IDs of the nominating students
+# as well as all the nominated students. 
+students &lt;- unique(c(el$studentID, el$friend.ID.code))
+students</code></pre>
+<pre><code>##  [1] 1894 2200 1880 1854 1858 1898 1842 1683 1950 1681 1886 2206 1836 1410 1476 1844 1063 1448 1872 1109 2018 1384 1497 1902 1679 1468 1884 1653 1916 2202 1404 1340 1418 1675 1677 1671 1878 1651 2210 1095 1649 1701 1900</code></pre>
+<p>There are in total 43 students in the network.</p>
+<p>To move forward we need to create a network object. There are two ways of moving forward: we can load it directly from the edgelist, or we can create an adjacency matrix. This version of the tutorial is going to create the network object from the edgelist because the homework for today is to load from a matrix. A later version of this document will include both versions.</p>
+<p>Although edgelists are a very reliable and efficient way of storing your network data, adjacency matrices are more intuitive (i.e. homework material). Storing a network using an adjacency matrix also helps storing network attributes (by using the rownames of the adjacency matrix and assigning those rownames the corresponding attributes - we’ll see that later).</p>
+<p>Following the workflow described above, we are going to create an empty matrix with the unique student IDs as the row and column names so that we can later populate them with the information from the edgelist.</p>
+<pre class="r"><code>mat &lt;- matrix(0, nrow =length(students) , ncol = length(students))
+colnames(mat) &lt;- as.character(students)
+rownames(mat) &lt;- as.character(students)
+# A glimpse of what this looks like
+mat[1:4, 1:4]</code></pre>
+<pre><code>##      1894 2200 1880 1854
+## 1894    0    0    0    0
+## 2200    0    0    0    0
+## 1880    0    0    0    0
+## 1854    0    0    0    0</code></pre>
+<p>We are now going to use a loop to fill the matrix: 1 whenever there is a friendship tie in <code>students</code>, 0 otherwise.</p>
+<pre class="r"><code>i &lt;- 1
+for (i in 1:nrow(el)) {
+  row.index &lt;- which(students == el[i, 1])
+  col.index &lt;- which(students == el[i, 2])
+  mat[row.index, col.index] &lt;- 1
+}
+mat[1:4, 1:4]</code></pre>
+<pre><code>##      1894 2200 1880 1854
+## 1894    0    0    0    0
+## 2200    0    0    0    0
+## 1880    0    0    0    1
+## 1854    0    0    1    0</code></pre>
+<p>Make sure you verify what you did after every step! For example, the first line from the imported edgelist suggests that the student with ID <code>1894</code> nominated <code>1095</code> as a friend:</p>
+<pre class="r"><code>el[1,]</code></pre>
+<pre><code>##   studentID friend.ID.code best.friend go.out.friend school.friend free.time.friend
+## 1      1894           1095         Yes           Yes            No              Yes</code></pre>
+<p>This means that the matrix should show a <code>1</code> in the row corresponding to <code>1894</code> and the column corresponding to <code>1095</code>.</p>
+<pre class="r"><code>mat[row.names(mat) == &#39;1894&#39;, colnames(mat) == &#39;1095&#39;]</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>Good! Let’s move on.</p>
+<p>The <code>network()</code> function takes edgelists as input to create a network object. To do so, we need a simpler version of the <code>el</code> object. NOtice how we are redefining the names as characters, so that <code>R</code> can read them properly.</p>
+<pre class="r"><code>el_to_network &lt;- el[, c(&quot;studentID&quot;, &quot;friend.ID.code&quot;)]
+el_to_network$studentID &lt;- as.character(el_to_network$studentID)
+el_to_network$friend.ID.code &lt;- as.character(el_to_network$friend.ID.code)</code></pre>
+</div>
+</div>
+<div id="building-a-network-object" class="section level1">
+<h1>Building a network object</h1>
+<p>We can construct a network object using the edgelist:</p>
+<pre class="r"><code>nw &lt;- network(el_to_network, directed = TRUE, matrix.type = &quot;edgelist&quot;)</code></pre>
+<p>Or we can do it by using the adjacency matrix:</p>
+<pre class="r"><code>nw &lt;- network(mat, directed = TRUE)</code></pre>
+<div id="a-simple-plot" class="section level2">
+<h2>A simple plot</h2>
+<p>We use the <code>ggnet2()</code>-command from the <code>GGally</code>-package. It uses <code>ggplot2</code> and creates very nice network plots.</p>
+<p><em>Note:</em> This tutorial includes several network plotting instructions. They are here so that you can learn how to plot network objects and get an initial intuition of what you are looking at. <em>However</em>, what we would like you to take away from this particular worksheet is how to create networks from adjacency matrices, add attributes, and set everything up for applying inferential techniques. Visual aids are amazing at helping us understand, but they should only be a complement to rigurous statistical methodology.</p>
+<pre class="r"><code>ggnet2(nw)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-12-1.png" alt="Friendship network" width="80%" />
+<p class="caption">
+Figure 1: Friendship network
+</p>
+</div>
+<pre class="r"><code>ggnet2(net = nw, 
+       label = TRUE, 
+       label.size = 3,
+       arrow.size = 3, 
+       arrow.gap = .03)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-13-1.png" alt="Friendship network - better" width="80%" />
+<p class="caption">
+Figure 2: Friendship network - better
+</p>
+</div>
+<p>You can also verify what you did using the network plot by adding the vertex (or node) names. Check out this great tutorial on <code>ggnet2</code> by the author of the function, <a href="https://briatte.github.io/ggnet/">Francois Briatte</a>.</p>
+</div>
+</div>
+<div id="add-a-nodal-covariate-and-plot-it" class="section level1">
+<h1>Add a nodal covariate and plot it</h1>
+<p>Once we have the network as a <code>network</code> object, we can add attributes or covariates to the nodes. <em>Important:</em> It is very important to be careful when doing this step: We are going run the analyises using <code>network</code> objects. A mismatch between the original data and that <code>network</code> object will result in erroneous conclusions.</p>
+<p>The student names are stored in the <code>students</code> object we created earlier.</p>
+<pre class="r"><code># The adjacency matrix
+as.character(students)</code></pre>
+<pre><code>##  [1] &quot;1894&quot; &quot;2200&quot; &quot;1880&quot; &quot;1854&quot; &quot;1858&quot; &quot;1898&quot; &quot;1842&quot; &quot;1683&quot; &quot;1950&quot; &quot;1681&quot; &quot;1886&quot; &quot;2206&quot; &quot;1836&quot; &quot;1410&quot; &quot;1476&quot; &quot;1844&quot; &quot;1063&quot; &quot;1448&quot; &quot;1872&quot; &quot;1109&quot; &quot;2018&quot; &quot;1384&quot; &quot;1497&quot; &quot;1902&quot; &quot;1679&quot; &quot;1468&quot; &quot;1884&quot; &quot;1653&quot; &quot;1916&quot; &quot;2202&quot; &quot;1404&quot; &quot;1340&quot; &quot;1418&quot; &quot;1675&quot; &quot;1677&quot; &quot;1671&quot; &quot;1878&quot; &quot;1651&quot; &quot;2210&quot; &quot;1095&quot; &quot;1649&quot; &quot;1701&quot; &quot;1900&quot;</code></pre>
+<p>Adding an attribute from the <code>dt</code>-data set, you cannot simply assign the data directly, as the IDs are not stored in the same order:</p>
+<pre class="r"><code># The original dataframe names
+dt$studentID</code></pre>
+<pre><code>##  [1] 1063 1095 1109 1340 1404 1410 1418 1448 1468 1476 1651 1653 1675 1677 1679 1681 1683 1836 1844 1854 1858 1872 1878 1880 1884 1886 1894 1898 1900 1902 1916 1950 2018 2200 2202 2206 2210 1842 1497 1384 1649 1671 1701</code></pre>
+<p>We can create a new data frame with the row names of the adjacency matrix,</p>
+<pre class="r"><code># att for attributes
+att &lt;- data.frame(&#39;studentID&#39; = as.character(students))</code></pre>
+<p>and match the variables you want as attributes to this new data frame:</p>
+<pre class="r"><code>att$sex &lt;- as.character(dt$sex[match(att$studentID, dt$studentID)])</code></pre>
+<p>As before, let’s check that everything is in order:</p>
+<pre class="r"><code>att$sex[att$studentID == &#39;1109&#39;]</code></pre>
+<pre><code>## [1] &quot;male&quot;</code></pre>
+<pre class="r"><code>dt$sex[dt$studentID == &#39;1109&#39;]</code></pre>
+<pre><code>## [1] male
+## Levels: female male</code></pre>
+<p>A quick summary of the variable shows the distribution of the attribute:</p>
+<pre class="r"><code>table(att$sex, useNA=&quot;always&quot;)</code></pre>
+<pre><code>## 
+## female   male   &lt;NA&gt; 
+##     17     22      4</code></pre>
+<p>With the auxiliary data frame <code>att</code> we can add the attribute to the network object we defined before <code>nw</code>. Only character or numeric vectors may be added (not factors).</p>
+<pre class="r"><code>set.vertex.attribute(nw, &#39;gender&#39;, as.character(att$sex))</code></pre>
+<p>Alternatively, you can set the attribute using <code>nw %v% 'gender' = as.character(att$sex)</code>.</p>
+<p>Just running the network name shows its structure. For example, we can see number of vertices and edges<code>nw</code> has. But most importantly, that there is an attribute called <code>gender</code>!</p>
+<pre class="r"><code>nw</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 43 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 134 
+##     missing edges= 0 
+##     non-missing edges= 134 
+## 
+##  Vertex attribute names: 
+##     gender vertex.names 
+## 
+## No edge attributes</code></pre>
+<pre class="r"><code>ggnet2(nw, 
+       label = TRUE, 
+       label.size = 3, 
+       arrow.size = 3, 
+       arrow.gap = .03,
+       node.color = &#39;gender&#39;, 
+       palette = &#39;Spectral&#39;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-22-1.png" alt="Friendship network of students from 3 classrooms, colored by gender" width="80%" />
+<p class="caption">
+Figure 3: Friendship network of students from 3 classrooms, colored by gender
+</p>
+</div>
+<p><code>ggnet2</code> can use the <code>ColorBrewer</code> predefined palettes for better colour management.</p>
+<div id="one-more-attribute" class="section level3">
+<h3>One more attribute</h3>
+<p>Let’s also add the students’ grade:</p>
+<pre class="r"><code>table(dt$marks.overall.num, useNA = &quot;always&quot;)</code></pre>
+<pre><code>## 
+##  3.5    4  4.5    5  5.5 &lt;NA&gt; 
+##    1    1   12   22    3    4</code></pre>
+<pre class="r"><code>att$grade.overall &lt;- dt$marks.overall.num[match(att$studentID, dt$studentID)]
+set.vertex.attribute(nw, &#39;grade&#39;, att$grade.overall)</code></pre>
+<pre class="r"><code>ggnet2(nw, 
+       label = TRUE, 
+       label.size = 3,
+       arrow.size = 3, 
+       arrow.gap = .03,
+       node.color = &#39;grade&#39;, 
+       palette = &#39;Spectral&#39;)</code></pre>
+<p>We can even plot a graph that has the two attributes represented:</p>
+<pre class="r"><code>ggnet2(nw,
+       label = TRUE, 
+       label.size = 3, 
+       node.color = &#39;grade&#39;, 
+       node.shape = &#39;gender&#39;,
+       palette = &#39;Spectral&#39;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-25-1.png" alt="Friendship network of students from 3 classrooms. Colors by grade (higher = better). Shape by gender" width="80%" />
+<p class="caption">
+Figure 4: Friendship network of students from 3 classrooms. Colors by grade (higher = better). Shape by gender
+</p>
+</div>
+<p>Using colors to describe a continuous scale like a student’s grade is a good idea if we can show a relatable scale in the graph. For this, we have to define our own set of colours. The <a href="http://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3"><code>ColorBrewer2</code></a> website generates useful colour schemes which you can copy from the website. In our case, we know that there are 5 possible scores (3.5, 4, 4.5, 5, 5.5), so we need 5 colours:</p>
+<pre class="r"><code>colours &lt;- c(&#39;#f0f9e8&#39;,&#39;#ccebc5&#39;,&#39;#a8ddb5&#39;,&#39;#7bccc4&#39;,&#39;#43a2ca&#39;)</code></pre>
+<p>The trick to get user defined colours that are accepted in the <code>palette</code> option of <code>ggnet2</code> is to match the values we are looking to plot. This can easily be done telling <code>R</code> that the names from the <code>colours</code> vector are the grade values:</p>
+<pre class="r"><code>names(colours) &lt;- sort(unique(att$grade.overall))</code></pre>
+<p>This is a much better looking plot:</p>
+<pre class="r"><code>ggnet2(nw, 
+       label = TRUE, 
+       label.size = 3, 
+       node.shape = &#39;gender&#39;,
+       node.color = &#39;grade&#39;, 
+       palette = colours)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-28-1.png" alt="Friendship network. (Better) colors by grade (higher = better). Shape by gender" width="80%" />
+<p class="caption">
+Figure 5: Friendship network. (Better) colors by grade (higher = better). Shape by gender
+</p>
+</div>
+<p>We can use the <code>mice</code> package (Multivariate Imputations by Chained Equations) to impute the grades of the missing students. We are only doing this to make sure that all the students get an assigned grade. Missing data imputation has its benefits and downsides, just as much as excluding observations. You can read some more on how to use the <code>mice</code> package <a href="http://www.r-bloggers.com/imputing-missing-data-with-r-mice-package/">here</a>). You can read more about MICE <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3074241/">here</a>.</p>
+<p><em>Note:</em> There is one important thing to be mentioned here. One of the main hypothesis for using MICE is that the variables on the left hand side of the regression equation are supposed to be independent to each other. However, one of the main reasons why we do network analysis is because we know that the observations are interdependent. Which in a way defeats the purpose of using MICE. The question of how to deal with missing observations in networks is still open. A possible solution when dealing with temporal networks (which we are going to look at into later) is to use past observations. Given that a deeper exploration of this problem and potential solutions are beyond the scope of this tutorial, we are just going to use MICE.</p>
+<p>It is important to consider the difference between missing data, and nodes that are no longer part of the network. We are going to deal with this second situation later in the lecture.</p>
+<p>Up next we are going to do a simple implementation of <code>mice()</code>, just for reference.</p>
+<pre class="r"><code>imp &lt;- cbind(as.character(att$studentID), att$grade.overall, att$sex)
+imp &lt;- mice(imp)</code></pre>
+<pre><code>## 
+##  iter imp variable
+##   1   1  V2  V3
+##   1   2  V2  V3
+##   1   3  V2  V3
+##   1   4  V2  V3
+##   1   5  V2  V3
+##   2   1  V2  V3
+##   2   2  V2  V3
+##   2   3  V2  V3
+##   2   4  V2  V3
+##   2   5  V2  V3
+##   3   1  V2  V3
+##   3   2  V2  V3
+##   3   3  V2  V3
+##   3   4  V2  V3
+##   3   5  V2  V3
+##   4   1  V2  V3
+##   4   2  V2  V3
+##   4   3  V2  V3
+##   4   4  V2  V3
+##   4   5  V2  V3
+##   5   1  V2  V3
+##   5   2  V2  V3
+##   5   3  V2  V3
+##   5   4  V2  V3
+##   5   5  V2  V3</code></pre>
+<pre><code>## Warning: Number of logged events: 60</code></pre>
+<pre class="r"><code>imp &lt;- complete(imp)
+summary(imp$V2)</code></pre>
+<pre><code>## 3.5   4 4.5   5 5.5 
+##   2   3  13  22   3</code></pre>
+<pre class="r"><code>summary(dt$marks.overall.num)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   3.500   4.500   5.000   4.821   5.000   5.500       4</code></pre>
+<pre class="r"><code>summary(imp$V3)</code></pre>
+<pre><code>## female   male 
+##     17     26</code></pre>
+<p>Let’s replace the old <code>grade</code> variable with this new one we created:</p>
+<pre class="r"><code># we use the table function to check everything is going alright:
+table(imp$V2, useNA=&quot;always&quot;)</code></pre>
+<pre><code>## 
+##  3.5    4  4.5    5  5.5 &lt;NA&gt; 
+##    2    3   13   22    3    0</code></pre>
+<pre class="r"><code>att$grade.overall &lt;- as.character(imp$V2[match(att$studentID, imp$V1)])
+att$sex &lt;- as.character(imp$V3[match(att$studentID, imp$V1)])
+set.vertex.attribute(nw, &#39;grade&#39;, att$grade.overall)
+set.vertex.attribute(nw, &quot;gender&quot;, att$sex)
+get.vertex.attribute(nw, attrname = &quot;gender&quot;)</code></pre>
+<pre><code>##  [1] &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;</code></pre>
+<pre class="r"><code>ggnet2(nw, 
+       label = TRUE, 
+       label.size = 3, 
+       node.shape = &quot;gender&quot;,
+       node.color = &#39;grade&#39;,
+       palette = colours)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-31-1.png" alt="Friendship network. (Better) colors by grade *imputed* (higher = better). Shape by gender" width="80%" />
+<p class="caption">
+Figure 6: Friendship network. (Better) colors by grade <em>imputed</em> (higher = better). Shape by gender
+</p>
+</div>
+</div>
+</div>
+<div id="add-an-edge-covariate-and-plot-it" class="section level1">
+<h1>5 Add an edge covariate and plot it</h1>
+<p>You can also add covariates to edges, instead of to vertices. The example we are using in this tutorial follows the same logic as your homework, so we are not going to go through it in this version of the tutorial.</p>
+<p>At this point in time we have a network object with a couple of vertex attributes allowing us to observe the distribution of test scores and gender. But what about the kinds of relationships between the students. We are now going to add an edge covariate according to the friendship intensities in the data we stored in <code>el</code>.</p>
+<pre class="r"><code>head(el)</code></pre>
+<pre><code>##   studentID friend.ID.code best.friend go.out.friend school.friend free.time.friend
+## 1      1894           1095         Yes           Yes            No              Yes
+## 2      2200           1109          No            No           Yes               No
+## 3      1880           1340          No            No           Yes              Yes
+## 4      1854           1340          No            No           Yes               No
+## 5      1858           1340          No            No           Yes               No
+## 6      1898           1384          No            No            No              Yes</code></pre>
+<p>The vector we are going to create looks like this:</p>
+<ul>
+<li>4 = best.friend</li>
+<li>3 = free.time.friend</li>
+<li>2 = school.friend</li>
+<li>1 = go.out.friend and other</li>
+</ul>
+<p>Without more context this is probably the best way to allocate the information provided. Some students gave multiple labels to one friend. We are going to take the highest value. This is, if they labeled their friend as <code>best.friend</code> and as a ‘go.out.friend’, we are going to assume that being ‘best friends’ trumps being ‘going out friends’, so we keep the highest ranked label.</p>
+<pre class="r"><code># 4 = best.friend
+el$friendship.scale &lt;- ifelse(el$best.friend == &#39;Yes&#39;, 
+                              yes = 4, 
+                              no = NA)
+
+# 3 = free.time.friend
+el$friendship.scale &lt;- ifelse(is.na(el$friendship.scale) &amp;
+                                el$free.time.friend == &#39;Yes&#39;,
+                              yes = 3, 
+                              no = el$friendship.scale)
+
+# 2 = school.friend
+el$friendship.scale &lt;- ifelse(is.na(el$friendship.scale) &amp;
+                                el$school.friend == &#39;Yes&#39;, 
+                              yes = 2, 
+                              no = el$friendship.scale)
+
+# 1 = go.out.friend and other
+el$friendship.scale &lt;- ifelse(is.na(el$friendship.scale), 
+                              yes = 1, 
+                              no = el$friendship.scale)
+table(el$friendship.scale, useNA=&quot;always&quot;)</code></pre>
+<pre><code>## 
+##    1    2    3    4 &lt;NA&gt; 
+##   14   67   29   24    0</code></pre>
+<p>We can create a new adjacency matrix that contains these friendship scales instead of a simple <code>0/1</code>.</p>
+<pre class="r"><code># Empty matrix to store the adjacency information
+mat.fs &lt;- matrix(0, nrow = length(students), ncol = length(students))
+
+rownames(mat.fs) &lt;- as.character(students)
+colnames(mat.fs) &lt;- as.character(students)
+
+for(i in 1:nrow(el)){
+  row.index &lt;- which(rownames(mat.fs) == el[i, 1])
+  col.index &lt;- which(colnames(mat.fs) == el[i, 2])
+  mat.fs[row.index, col.index] &lt;- el$friendship.scale[i]
+}</code></pre>
+<p>Let’s see what the top-left corner of the matrix looks like:</p>
+<pre class="r"><code>mat.fs[1:4, 1:4]</code></pre>
+<pre><code>##      1894 2200 1880 1854
+## 1894    0    0    0    0
+## 2200    0    0    0    0
+## 1880    0    0    0    3
+## 1854    0    0    2    0</code></pre>
+<p>Now we can add it to our <code>network</code> object. Presenting the information available <code>nw</code> we can see that now there is one edge attribute called <code>f.scale</code>.</p>
+<pre class="r"><code>set.edge.value(nw, &#39;f.scale&#39;, mat.fs)
+nw</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 43 
+##   directed = TRUE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 134 
+##     missing edges= 0 
+##     non-missing edges= 134 
+## 
+##  Vertex attribute names: 
+##     gender grade vertex.names 
+## 
+##  Edge attribute names: 
+##     f.scale</code></pre>
+<p>We can make a new plot that includes this information:</p>
+<pre class="r"><code>ggnet2(nw, 
+       label = TRUE, 
+       label.size = 4,
+       arrow.size = 3, 
+       arrow.gap = .03,
+       edge.color = &#39;f.scale&#39;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-37-1.png" alt="Friendship network. Edge colors by friendship intensities" width="80%" />
+<p class="caption">
+Figure 7: Friendship network. Edge colors by friendship intensities
+</p>
+</div>
+<p>Unfortunately we cannot specify a legend for the edge-colors yet. Plotting stronger relationship as thicker edges might be a better alternative:</p>
+<pre class="r"><code>ggnet2(nw, 
+       label = TRUE, 
+       label.size = 3, 
+       edge.size = &#39;f.scale&#39;)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-38"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-38-1.png" alt="Friendship network. Edge width by friendship intensities" width="80%" />
+<p class="caption">
+Figure 8: Friendship network. Edge width by friendship intensities
+</p>
+</div>
+<p>Finally, we can put everything we have learned so far together in a single figure:</p>
+<pre class="r"><code>ggnet2(nw, 
+       label = TRUE, 
+       label.size = 3, 
+       node.shape = &#39;gender&#39;,
+       node.color = &#39;grade&#39;, 
+       edge.size = &#39;f.scale&#39; , 
+       palette = colours)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
+<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-39-1.png" alt="Friendship network. All info available!" width="80%" />
+<p class="caption">
+Figure 9: Friendship network. All info available!
+</p>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
