@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on A Hugo website</title>
+    <title>Posts on Sebastián Martínez</title>
     <link>/post/</link>
-    <description>Recent content in Posts on A Hugo website</description>
+    <description>Recent content in Posts on Sebastián Martínez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
@@ -19,6 +19,33 @@
       <guid>/2019/02/25/lab-1---intro-to-networks-in-r/</guid>
       <description>Setup Before we begin, let’s install/load the packages we are going to use today. Perhaps the one you are going to use for the first time is statnet.
 rm(list = ls()) if(!require(statnet)) install.packages(&amp;quot;statnet&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;statnet&amp;quot;) if(!require(mice)) install.packages(&amp;quot;mice&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;mice&amp;quot;) if(!require(ggplot2)) install.packages(&amp;quot;ggplot2&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;ggplot2&amp;quot;) if(!require(GGally)) install.packages(&amp;quot;GGally&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;GGally&amp;quot;) if(!require(scales)) install.packages(&amp;quot;scales&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;scales&amp;quot;) Loading the statnet package also loads other important packages including sna, network, and ergm. Installing and loading statnet automatically installs and loads all the necessary packages for statistical network analysis.</description>
+    </item>
+    
+    <item>
+      <title>#EvidenceWeek</title>
+      <link>/2018/07/04/#evidenceweek/</link>
+      <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/04/#evidenceweek/</guid>
+      <description>Sense About Science is a charity that promotes proper use of science and evidence in the public sphere. As stated on its website, it looks to intervene to hold “those responsible to account”. One of their latest ventures is called Evidence Week. The premise of the event is to bring together Members of Parliament with community members and other interested parties to discuss the need and use of evidence in policy-making.</description>
+    </item>
+    
+    <item>
+      <title>Facebook, or whoever controls the medium</title>
+      <link>/2018/04/13/facebook-or-whoever-controls-the-medium/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/04/13/facebook-or-whoever-controls-the-medium/</guid>
+      <description>It has been argued that one of the things that allow the human race to go as far as it does is our ability to communicate and produce knowledge through argumentation. When doing my undergrad a friend used to say that we don’t really think until when we write it somewhere and make sure it makes sense (in some way, this blog is an exercise in articulation). Alternatively, I recently heard someone say that we should not believe things we are exposed to until we understand them, regardless of where they come from.</description>
+    </item>
+    
+    <item>
+      <title>Algorithmical Intelligence and the policy process</title>
+      <link>/2018/04/11/algorithmical-intelligence-and-the-policy-process/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/04/11/algorithmical-intelligence-and-the-policy-process/</guid>
+      <description>At every point in time, people have probably claimed that ‘we are going through the most important moment in the history of mankind’. So I am going to go ahead and say that this is at very least, one of the most important moments in the history of mankind. With the advent of technology and computational power, algorithms determine most of the processes that shape our everyday lives. There are increasingly fewer situations in which our decisions are not influenced by a computer program ‘suggesting’ how we should go about our day.</description>
     </item>
     
     <item>

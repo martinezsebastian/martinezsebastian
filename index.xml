@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A Hugo website</title>
+    <title>Sebastián Martínez</title>
     <link>/</link>
-    <description>Recent content on A Hugo website</description>
+    <description>Recent content on Sebastián Martínez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
@@ -22,6 +22,33 @@ rm(list = ls()) if(!require(statnet)) install.packages(&amp;quot;statnet&amp;quo
     </item>
     
     <item>
+      <title>#EvidenceWeek</title>
+      <link>/2018/07/04/#evidenceweek/</link>
+      <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/04/#evidenceweek/</guid>
+      <description>Sense About Science is a charity that promotes proper use of science and evidence in the public sphere. As stated on its website, it looks to intervene to hold “those responsible to account”. One of their latest ventures is called Evidence Week. The premise of the event is to bring together Members of Parliament with community members and other interested parties to discuss the need and use of evidence in policy-making.</description>
+    </item>
+    
+    <item>
+      <title>Facebook, or whoever controls the medium</title>
+      <link>/2018/04/13/facebook-or-whoever-controls-the-medium/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/04/13/facebook-or-whoever-controls-the-medium/</guid>
+      <description>It has been argued that one of the things that allow the human race to go as far as it does is our ability to communicate and produce knowledge through argumentation. When doing my undergrad a friend used to say that we don’t really think until when we write it somewhere and make sure it makes sense (in some way, this blog is an exercise in articulation). Alternatively, I recently heard someone say that we should not believe things we are exposed to until we understand them, regardless of where they come from.</description>
+    </item>
+    
+    <item>
+      <title>Algorithmical Intelligence and the policy process</title>
+      <link>/2018/04/11/algorithmical-intelligence-and-the-policy-process/</link>
+      <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/04/11/algorithmical-intelligence-and-the-policy-process/</guid>
+      <description>At every point in time, people have probably claimed that ‘we are going through the most important moment in the history of mankind’. So I am going to go ahead and say that this is at very least, one of the most important moments in the history of mankind. With the advent of technology and computational power, algorithms determine most of the processes that shape our everyday lives. There are increasingly fewer situations in which our decisions are not influenced by a computer program ‘suggesting’ how we should go about our day.</description>
+    </item>
+    
+    <item>
       <title>A Plain Markdown Post</title>
       <link>/2016/12/30/a-plain-markdown-post/</link>
       <pubDate>Fri, 30 Dec 2016 21:49:57 -0700</pubDate>
@@ -29,15 +56,6 @@ rm(list = ls()) if(!require(statnet)) install.packages(&amp;quot;statnet&amp;quo
       <guid>/2016/12/30/a-plain-markdown-post/</guid>
       <description>This is a post written in plain Markdown (*.md) instead of R Markdown (*.Rmd). The major differences are:
  You cannot run any R code in a plain Markdown document, whereas in an R Markdown document, you can embed R code chunks (```{r}); A plain Markdown post is rendered through Blackfriday, and an R Markdown document is compiled by rmarkdown and Pandoc.  There are many differences in syntax between Blackfriday&amp;rsquo;s Markdown and Pandoc&amp;rsquo;s Markdown.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
-      
-      <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
     </item>
     
     <item>
@@ -58,6 +76,24 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       
       <guid>/2015/01/01/lorem-ipsum/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>I was born in Bogotá, Colombia. After graduating high school, I did a B.Sc. in Mathematics (Dissertation: “Dynamical Systems and Fractal Market Analysis”), a B.A. and an M.A. in Economics (M.A. Dissertation: “Uncertainty Shocks in Colombia: Characterization and Effect through DSGE models”), all at the Universidad de los Andes. I then moved to Berlin to do Masters in Public Policy (Dissertation: “The relation between urban development and reported property crime: the case of Berlin”) at the Hertie School of Governance.</description>
+    </item>
+    
+    <item>
+      <title>Curriculum Vitae</title>
+      <link>/cv/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cv/</guid>
+      <description>This is a link to my (not always up-to-date) CV. If you would like to see my latest publications please head to my Google Scholar website.</description>
     </item>
     
   </channel>

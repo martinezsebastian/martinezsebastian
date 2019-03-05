@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.47" />
 
 
-<title>Lab 1 - Intro to networks in R - A Hugo website</title>
-<meta property="og:title" content="Lab 1 - Intro to networks in R - A Hugo website">
+<title>Lab 1 - Intro to networks in R - Sebastián Martínez</title>
+<meta property="og:title" content="Lab 1 - Intro to networks in R - Sebastián Martínez">
 
 
   <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
@@ -38,7 +38,7 @@
       <header class="header">
         <nav class="nav">
   <a href="../../../../" class="nav-logo">
-    <img src="../../../../images/logo.png"
+    <img src="../../../../images/foto.png"
          width="50"
          height="50"
          alt="Logo">
@@ -46,11 +46,13 @@
 
   <ul class="nav-links">
     
-    <li><a href="../../../../about/">About</a></li>
+    <li><a href="../../../../about/">About me</a></li>
     
-    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    <li><a href="../../../../cv/">CV</a></li>
     
-    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    <li><a href="https://github.com/martinezsebastian">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/sbmrtnz">Twitter</a></li>
     
   </ul>
 </nav>
@@ -354,7 +356,7 @@ imp &lt;- mice(imp)</code></pre>
 <pre class="r"><code>imp &lt;- complete(imp)
 summary(imp$V2)</code></pre>
 <pre><code>## 3.5   4 4.5   5 5.5 
-##   1   2  15  22   3</code></pre>
+##   3   1  12  23   4</code></pre>
 <pre class="r"><code>summary(dt$marks.overall.num)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
 ##   3.500   4.500   5.000   4.821   5.000   5.500       4</code></pre>
@@ -366,7 +368,7 @@ summary(imp$V2)</code></pre>
 table(imp$V2, useNA=&quot;always&quot;)</code></pre>
 <pre><code>## 
 ##  3.5    4  4.5    5  5.5 &lt;NA&gt; 
-##    1    2   15   22    3    0</code></pre>
+##    3    1   12   23    4    0</code></pre>
 <pre class="r"><code>att$grade.overall &lt;- as.character(imp$V2[match(att$studentID, imp$V1)])
 att$sex &lt;- as.character(imp$V3[match(att$studentID, imp$V1)])
 set.vertex.attribute(nw, &#39;grade&#39;, att$grade.overall)
@@ -521,9 +523,6 @@ Figure 9: Friendship network. All info available!
       <footer class="footer">
         <ul class="footer-links">
           <li>
-            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
-          </li>
-          <li>
             <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
           </li>
         </ul>
@@ -550,6 +549,19 @@ Figure 9: Friendship network. All info available!
 
 
     
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-135604208-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
   </body>
 </html>
 
