@@ -356,25 +356,25 @@ imp &lt;- mice(imp)</code></pre>
 <pre class="r"><code>imp &lt;- complete(imp)
 summary(imp$V2)</code></pre>
 <pre><code>## 3.5   4 4.5   5 5.5 
-##   3   1  12  23   4</code></pre>
+##   2   2  12  22   5</code></pre>
 <pre class="r"><code>summary(dt$marks.overall.num)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
 ##   3.500   4.500   5.000   4.821   5.000   5.500       4</code></pre>
 <pre class="r"><code>summary(imp$V3)</code></pre>
 <pre><code>## female   male 
-##     21     22</code></pre>
+##     20     23</code></pre>
 <p>Let’s replace the old <code>grade</code> variable with this new one we created:</p>
 <pre class="r"><code># we use the table function to check everything is going alright:
 table(imp$V2, useNA=&quot;always&quot;)</code></pre>
 <pre><code>## 
 ##  3.5    4  4.5    5  5.5 &lt;NA&gt; 
-##    3    1   12   23    4    0</code></pre>
+##    2    2   12   22    5    0</code></pre>
 <pre class="r"><code>att$grade.overall &lt;- as.character(imp$V2[match(att$studentID, imp$V1)])
 att$sex &lt;- as.character(imp$V3[match(att$studentID, imp$V1)])
 set.vertex.attribute(nw, &#39;grade&#39;, att$grade.overall)
 set.vertex.attribute(nw, &quot;gender&quot;, att$sex)
 get.vertex.attribute(nw, attrname = &quot;gender&quot;)</code></pre>
-<pre><code>##  [1] &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;</code></pre>
+<pre><code>##  [1] &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;male&quot;   &quot;male&quot;</code></pre>
 <pre class="r"><code>ggnet2(nw, 
        label = TRUE, 
        label.size = 3, 
