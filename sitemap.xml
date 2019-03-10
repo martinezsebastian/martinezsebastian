@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/2019/02/25/lab-1---intro-to-networks-in-r/</loc>
+    <loc>/tutorials/lab1_introtosna/</loc>
     <lastmod>2019-02-25T00:00:00+00:00</lastmod>
   </url>
   
@@ -37,7 +37,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-02-25T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -49,6 +49,12 @@
   
   <url>
     <loc>/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tutorials/</loc>
+    <lastmod>2019-02-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

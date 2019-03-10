@@ -10,7 +10,7 @@
 <meta property="og:title" content="Lab 1 - Intro to networks in R - Sebastián Martínez">
 
 
-  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+  <link href='../../favicon.ico' rel='icon' type='image/x-icon'/>
 
 
 
@@ -27,8 +27,8 @@
 
 
 
-<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
-<link rel="stylesheet" href="../../../../css/main.css" media="all">
+<link rel="stylesheet" href="../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../css/main.css" media="all">
 
 
 
@@ -37,8 +37,8 @@
     <div class="wrapper">
       <header class="header">
         <nav class="nav">
-  <a href="../../../../" class="nav-logo">
-    <img src="../../../../images/foto.png"
+  <a href="../../" class="nav-logo">
+    <img src="../../images/foto.png"
          width="50"
          height="50"
          alt="Logo">
@@ -46,13 +46,13 @@
 
   <ul class="nav-links">
     
-    <li><a href="../../../../about/">About me</a></li>
+    <li><a href="../../about/">About me</a></li>
     
-    <li><a href="../../../../cv/">CV</a></li>
+    <li><a href="../../cv/">CV</a></li>
     
     <li><a href="https://github.com/martinezsebastian">GitHub</a></li>
     
-    <li><a href="../../../../tutorials/">Tutorials</a></li>
+    <li><a href="../../tutorials/">Tutorials</a></li>
     
     <li><a href="https://twitter.com/sbmrtnz">Twitter</a></li>
     
@@ -66,13 +66,9 @@
 
   <article class="article">
     
-    <span class="article-duration">15 min read</span>
-    
 
     <h1 class="article-title">Lab 1 - Intro to networks in R</h1>
 
-    
-    <span class="article-date">2019-02-25</span>
     
 
     <div class="article-content">
@@ -112,7 +108,7 @@ library(&quot;scales&quot;)</code></pre>
 <li>Create a matrix with the information we need</li>
 <li>Create/modify the network object with the information from the matrix</li>
 </ol>
-<p><img src="../../../../images/NW_year_marks_resonly_summer.jpg",width = "850", height = "850"></p>
+<p><img src="../../images/NW_year_marks_resonly_summer.jpg",width = "850", height = "850"></p>
 <p>Read in the data. Remember to use an easy variable name when loading the data.</p>
 <pre class="r"><code># Two datasets: 
 # Students&#39; edgelist
@@ -195,7 +191,7 @@ el_to_network$friend.ID.code &lt;- as.character(el_to_network$friend.ID.code)</c
 <p><em>Note:</em> This tutorial includes several network plotting instructions. They are here so that you can learn how to plot network objects and get an initial intuition of what you are looking at. <em>However</em>, what we would like you to take away from this particular worksheet is how to create networks from adjacency matrices, add attributes, and set everything up for applying inferential techniques. Visual aids are amazing at helping us understand, but they should only be a complement to rigurous statistical methodology.</p>
 <pre class="r"><code>ggnet2(nw)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-12-1.png" alt="Friendship network" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-12-1.png" alt="Friendship network" width="80%" />
 <p class="caption">
 Figure 1: Friendship network
 </p>
@@ -206,7 +202,7 @@ Figure 1: Friendship network
        arrow.size = 3, 
        arrow.gap = .03)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-13-1.png" alt="Friendship network - better" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-13-1.png" alt="Friendship network - better" width="80%" />
 <p class="caption">
 Figure 2: Friendship network - better
 </p>
@@ -269,7 +265,7 @@ att &lt;- data.frame(&#39;studentID&#39; = as.character(students))</code></pre>
        node.color = &#39;gender&#39;, 
        palette = &#39;Spectral&#39;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-22-1.png" alt="Friendship network of students from 3 classrooms, colored by gender" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-22-1.png" alt="Friendship network of students from 3 classrooms, colored by gender" width="80%" />
 <p class="caption">
 Figure 3: Friendship network of students from 3 classrooms, colored by gender
 </p>
@@ -299,7 +295,7 @@ set.vertex.attribute(nw, &#39;grade&#39;, att$grade.overall)</code></pre>
        node.shape = &#39;gender&#39;,
        palette = &#39;Spectral&#39;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-25-1.png" alt="Friendship network of students from 3 classrooms. Colors by grade (higher = better). Shape by gender" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-25-1.png" alt="Friendship network of students from 3 classrooms. Colors by grade (higher = better). Shape by gender" width="80%" />
 <p class="caption">
 Figure 4: Friendship network of students from 3 classrooms. Colors by grade (higher = better). Shape by gender
 </p>
@@ -316,7 +312,7 @@ Figure 4: Friendship network of students from 3 classrooms. Colors by grade (hig
        node.color = &#39;grade&#39;, 
        palette = colours)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-28-1.png" alt="Friendship network. (Better) colors by grade (higher = better). Shape by gender" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-28-1.png" alt="Friendship network. (Better) colors by grade (higher = better). Shape by gender" width="80%" />
 <p class="caption">
 Figure 5: Friendship network. (Better) colors by grade (higher = better). Shape by gender
 </p>
@@ -364,7 +360,7 @@ summary(imp$V2)</code></pre>
 ##   3.500   4.500   5.000   4.821   5.000   5.500       4</code></pre>
 <pre class="r"><code>summary(imp$V3)</code></pre>
 <pre><code>## female   male 
-##     21     22</code></pre>
+##     19     24</code></pre>
 <p>Let’s replace the old <code>grade</code> variable with this new one we created:</p>
 <pre class="r"><code># we use the table function to check everything is going alright:
 table(imp$V2, useNA=&quot;always&quot;)</code></pre>
@@ -376,7 +372,7 @@ att$sex &lt;- as.character(imp$V3[match(att$studentID, imp$V1)])
 set.vertex.attribute(nw, &#39;grade&#39;, att$grade.overall)
 set.vertex.attribute(nw, &quot;gender&quot;, att$sex)
 get.vertex.attribute(nw, attrname = &quot;gender&quot;)</code></pre>
-<pre><code>##  [1] &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;</code></pre>
+<pre><code>##  [1] &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot; &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;male&quot;</code></pre>
 <pre class="r"><code>ggnet2(nw, 
        label = TRUE, 
        label.size = 3, 
@@ -384,7 +380,7 @@ get.vertex.attribute(nw, attrname = &quot;gender&quot;)</code></pre>
        node.color = &#39;grade&#39;,
        palette = colours)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-31"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-31-1.png" alt="Friendship network. (Better) colors by grade *imputed* (higher = better). Shape by gender" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-31-1.png" alt="Friendship network. (Better) colors by grade *imputed* (higher = better). Shape by gender" width="80%" />
 <p class="caption">
 Figure 6: Friendship network. (Better) colors by grade <em>imputed</em> (higher = better). Shape by gender
 </p>
@@ -482,7 +478,7 @@ nw</code></pre>
        arrow.gap = .03,
        edge.color = &#39;f.scale&#39;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-37-1.png" alt="Friendship network. Edge colors by friendship intensities" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-37-1.png" alt="Friendship network. Edge colors by friendship intensities" width="80%" />
 <p class="caption">
 Figure 7: Friendship network. Edge colors by friendship intensities
 </p>
@@ -493,7 +489,7 @@ Figure 7: Friendship network. Edge colors by friendship intensities
        label.size = 3, 
        edge.size = &#39;f.scale&#39;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-38"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-38-1.png" alt="Friendship network. Edge width by friendship intensities" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-38-1.png" alt="Friendship network. Edge width by friendship intensities" width="80%" />
 <p class="caption">
 Figure 8: Friendship network. Edge width by friendship intensities
 </p>
@@ -507,7 +503,7 @@ Figure 8: Friendship network. Edge width by friendship intensities
        edge.size = &#39;f.scale&#39; , 
        palette = colours)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
-<img src="../../../../post/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-39-1.png" alt="Friendship network. All info available!" width="80%" />
+<img src="../../tutorials/Lab1_IntroToSNA_files/figure-html/unnamed-chunk-39-1.png" alt="Friendship network. All info available!" width="80%" />
 <p class="caption">
 Figure 9: Friendship network. All info available!
 </p>
@@ -525,7 +521,7 @@ Figure 9: Friendship network. All info available!
       <footer class="footer">
         <ul class="footer-links">
           <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
           </li>
         </ul>
       </footer>
@@ -546,7 +542,7 @@ Figure 9: Friendship network. All info available!
 
 
     
-<script src="../../../../js/math-code.js"></script>
+<script src="../../js/math-code.js"></script>
 <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 

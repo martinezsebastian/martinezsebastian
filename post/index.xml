@@ -6,20 +6,10 @@
     <description>Recent content in Posts on Sebastián Martínez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Lab 1 - Intro to networks in R</title>
-      <link>/2019/02/25/lab-1---intro-to-networks-in-r/</link>
-      <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/2019/02/25/lab-1---intro-to-networks-in-r/</guid>
-      <description>Setup Before we begin, let’s install/load the packages we are going to use today. Perhaps the one you are going to use for the first time is statnet.
-rm(list = ls()) if(!require(statnet)) install.packages(&amp;quot;statnet&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;statnet&amp;quot;) if(!require(mice)) install.packages(&amp;quot;mice&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;mice&amp;quot;) if(!require(ggplot2)) install.packages(&amp;quot;ggplot2&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;ggplot2&amp;quot;) if(!require(GGally)) install.packages(&amp;quot;GGally&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;GGally&amp;quot;) if(!require(scales)) install.packages(&amp;quot;scales&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;scales&amp;quot;) Loading the statnet package also loads other important packages including sna, network, and ergm. Installing and loading statnet automatically installs and loads all the necessary packages for statistical network analysis.</description>
-    </item>
     
     <item>
       <title>#EvidenceWeek</title>
