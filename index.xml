@@ -6,19 +6,18 @@
     <description>Recent content on Sebastián Martínez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Lab 1 - Intro to networks in R</title>
-      <link>/tutorials/lab1_introtosna/</link>
-      <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
+      <title>Changes, changes, changes</title>
+      <link>/2019/03/18/changes-changes-changes/</link>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tutorials/lab1_introtosna/</guid>
-      <description>Setup Before we begin, let’s install/load the packages we are going to use today. Perhaps the one you are going to use for the first time is statnet.
-rm(list = ls()) if(!require(statnet)) install.packages(&amp;quot;statnet&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;statnet&amp;quot;) if(!require(mice)) install.packages(&amp;quot;mice&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;mice&amp;quot;) if(!require(ggplot2)) install.packages(&amp;quot;ggplot2&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;ggplot2&amp;quot;) if(!require(GGally)) install.packages(&amp;quot;GGally&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;GGally&amp;quot;) if(!require(scales)) install.packages(&amp;quot;scales&amp;quot;,repos = &amp;quot;http://cran.us.r-project.org&amp;quot;) library(&amp;quot;scales&amp;quot;) Loading the statnet package also loads other important packages including sna, network, and ergm. Installing and loading statnet automatically installs and loads all the necessary packages for statistical network analysis.</description>
+      <guid>/2019/03/18/changes-changes-changes/</guid>
+      <description>Two weeks ago, Mark Zuckerberg, CEO and creator of Facebook, posted a 3000 word document introducing a new vision of the future for his companies. A lot has been written about it (some good examples are here, here, and here). But the gist of the document is a move towards privacy and away from a public social network. In his words, to move the conversation from the public square, and allow &amp;ldquo;to connect privately in the digital equivalent of the living room.</description>
     </item>
     
     <item>
@@ -64,6 +63,15 @@ rm(list = ls()) if(!require(statnet)) install.packages(&amp;quot;statnet&amp;quo
       
       <guid>/cv/</guid>
       <description>This is a link to my (not always up-to-date) CV. If you would like to see my latest publications please head to my Google Scholar website.</description>
+    </item>
+    
+    <item>
+      <title>Tutorials</title>
+      <link>/tutorials/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorials/</guid>
+      <description>Please come back in the future when I have sorted how to make this page work in the way I want it to!</description>
     </item>
     
   </channel>

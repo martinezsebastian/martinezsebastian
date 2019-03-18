@@ -3,8 +3,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/tutorials/lab1_introtosna/</loc>
-    <lastmod>2019-02-25T00:00:00+00:00</lastmod>
+    <loc>/2019/03/18/changes-changes-changes/</loc>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -37,13 +37,13 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-07-04T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-02-25T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -54,8 +54,6 @@
   
   <url>
     <loc>/tutorials/</loc>
-    <lastmod>2019-02-25T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>
